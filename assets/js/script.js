@@ -1,5 +1,10 @@
 $(document).ready(function () {
 
+    $('[href="#begin"]').on('click', function(e){
+        e.preventDefault()
+        $('#form_id_lastname')[0].focus()
+    })
+
     let signaturePad = createSignaturePad();
     resizeSignaturePad(signaturePad);
 
