@@ -53,12 +53,21 @@
                         </div>
                         <div class="form-group col-sm-12 col-md-5">
                             <label for="form_dob_month">Luna:</label>
-                            <input type="text" class="form-control" name="form_dob_month" id="form_dob_month"  data-date-end-date="0d" required>
+                            <input type="text" class="form-control" name="form_dob_month" id="form_dob_month" required>
                         </div>
                         <div class="form-group col-sm-12 col-md-4">
                             <label for="form_dob_year">Anul:</label>
-                            <input type="text" class="form-control" name="form_dob_year" id="form_dob_year"  data-date-end-date="0d" required>
+                            <input type="text" class="form-control" name="form_dob_year" id="form_dob_year" required>
                         </div>
+                    </div>
+
+                    <div class="alert alert-warning border" id="age_warning">
+                        <div class="col-sm-12 col-md-12">
+                            <h3>ATENTIE!</h3>
+                            <p>Aveți o vârstă mai mare de 65 de ani. Asigurați-vă ieșirea la cumpărături în intervalul 11.00-13.00.</p>
+                            <p>La ora 13.00 să fiți în casa dumneavoastră, altfel riscați amenzi.</p>
+                        </div>
+                        
                     </div>
                 </div>
                 <h3>Adresa locuinței</h3>
@@ -162,11 +171,15 @@
                 <h3>Semnătură</h3>
                 <p class="small text-muted">Folosiți degetul sau cursorul pentru a semna.</p>
                 <hr>
-                <div style="height: 200px;">
+                <div class="border" id="signiture">
                     <canvas class="w-100 h-100"></canvas>
                 </div>
-                <a href="javascript:void(0);" class="btn btn-secondary btn-block" id="form-signature-clear">Șterge semnătura</a>
-                <button type="submit" class="btn btn-success btn-block">Descarcă declarație</button>
+                <div class="row">
+                    <div class="col-sm-12 col-md-12">
+                        <a href="javascript:void(0);" class="btn btn-secondary btn-block" id="form-signature-clear">Șterge semnătura</a>
+                        <button type="submit" class="btn btn-success btn-block">Descarcă declarație</button>
+                    </div>
+                </div>
             </form>
         </div>
         <p class="small text-muted text-center mt-3">

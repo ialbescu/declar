@@ -2,3 +2,8 @@
     content: " *";
     color: red;
 }
+
+#signiture {
+    height: 200px;
+    margin: 5px 0;
+}

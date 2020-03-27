@@ -3,7 +3,9 @@ $(document).ready(function () {
     $('[href="#begin"]').on('click', function(e){
         e.preventDefault()
         $('#form_id_lastname')[0].focus()
-    })
+    });
+
+    $('#age_warning').hide();
 
     let signaturePad = createSignaturePad();
     resizeSignaturePad(signaturePad);
@@ -21,13 +23,36 @@ $(document).ready(function () {
         reason_10: '10.asigurarea de bunuri necesare desfășurării activității profesionale.',
     };
 
-    let formAddressSameInput = $('#form_address_same');
+    var age = checkAge();
 
-    formAddressSameInput.on('change', function (event) {
+    function checkAge() {
+        var year = $('#form_dob_year').val() || 1900;
+        var month = $('#form_dob_month').val() || '00';
+        var day = $('#form_dob_day').val() || '00';
 
-        let isChecked = $(this).is(':checked');
+        var birthDate = new Date(year, month, day);
+        birthDate.setMonth(birthDate.getMonth() - 1);
 
-        $('.js-form-residence :input:not(#form_address_same)').prop('disabled', isChecked);
+        var age = calculateAge(birthDate);
+
+        return age;
+    }
+
+    function calculateAge(birthday) { // birthday is a date
+        var ageDifMs = Date.now() - birthday;
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
+
+    $('#form_id_address, #form_move_places').on('focus', function() {
+        age = checkAge();
+
+        if(age >= 65) {
+            $('#age_warning').show();
+        } else {
+            $('#age_warning').hide();
+        }
+        
     });
 
     $('#form-signature-clear').on('click', function () {
@@ -59,23 +84,23 @@ $(document).ready(function () {
 
     $('#form_dob_year').datepicker({
         autoPick: false,
-        format: 'yyyy',
-        clearBtn: true,
-        maxDate: '2020.01.01'
+        format: 'yyyy'
+    }).on("change", function() {
+        checkAge();
     });
 
     $('#form_dob_month').datepicker({
         autoPick: false,
-        format: 'mm',
-        clearBtn: true,
-        maxDate: '2020.01.01'
+        format: 'mm'
+    }).on("change", function() {
+        checkAge();
     });
 
     $('#form_dob_day').datepicker({
         autoPick: false,
-        format: 'd',
-        clearBtn: true,
-        maxDate: '2020.01.01'
+        format: 'd'
+    }).on("change", function() {
+        checkAge();
     });
 
     function getFormData($form) {
