@@ -65,6 +65,64 @@ $(document).ready(function () {
         format: 'd'
     });
 
+    const localStorage_save = "save-locally";
+    const localStorage_data = "form-data";
+
+    let saveLocallyEnabled = localStorage.getItem(localStorage_save) === "false" ? false : true;
+
+    $("#save-check").prop("checked", saveLocallyEnabled);
+
+    $("#save-check").change(function() {
+
+        saveLocallyEnabled = this.checked;
+
+        localStorage.setItem(localStorage_save, saveLocallyEnabled);
+
+        if(!saveLocallyEnabled) localStorage.removeItem(localStorage_data);
+
+    });
+
+    (function getLocalStorageData() {
+
+        if(!saveLocallyEnabled) return;
+        
+        const data = localStorage.getItem(localStorage_data);
+        
+        if(data) {
+            const parsed = JSON.parse(data);
+
+            Object.keys(parsed).forEach(function(item){
+                
+                switch (item){
+
+                    case "form_reason":
+
+                        $("#form_" + parsed[item]).prop("checked", true);
+
+                        break;
+
+                    default:
+
+                        $("#" + item).val(parsed[item]);
+                }
+
+            });
+        }
+
+    })();
+
+    $("input[id^=form_]").map(function(idx, item) {
+        if(saveLocallyEnabled) $(item).on("change", save);
+    });
+
+    function save() {
+
+        const data = getFormData($('form'));
+
+        localStorage.setItem(localStorage_data, JSON.stringify(data));
+
+    }
+
     function getFormData($form) {
 
         let data = $form.serializeArray();
