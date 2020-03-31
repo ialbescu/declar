@@ -23,38 +23,6 @@ $(document).ready(function () {
         reason_10: '10.asigurarea de bunuri necesare desfășurării activității profesionale.',
     };
 
-    var age = checkAge();
-
-    function checkAge() {
-        var year = $('#form_dob_year').val() || 1900;
-        var month = $('#form_dob_month').val() || '00';
-        var day = $('#form_dob_day').val() || '00';
-
-        var birthDate = new Date(year, month, day);
-        birthDate.setMonth(birthDate.getMonth() - 1);
-
-        var age = calculateAge(birthDate);
-
-        return age;
-    }
-
-    function calculateAge(birthday) { // birthday is a date
-        var ageDifMs = Date.now() - birthday;
-        var ageDate = new Date(ageDifMs); // miliseconds from epoch
-        return Math.abs(ageDate.getUTCFullYear() - 1970);
-    }
-
-    $('#form_id_address, #form_move_places').on('focus', function() {
-        age = checkAge();
-
-        if(age >= 65) {
-            $('#age_warning').show();
-        } else {
-            $('#age_warning').hide();
-        }
-        
-    });
-
     $('#form-signature-clear').on('click', function () {
 
         signaturePad.clear();
@@ -85,22 +53,16 @@ $(document).ready(function () {
     $('#form_dob_year').datepicker({
         autoPick: false,
         format: 'yyyy'
-    }).on("change", function() {
-        checkAge();
     });
 
     $('#form_dob_month').datepicker({
         autoPick: false,
         format: 'mm'
-    }).on("change", function() {
-        checkAge();
     });
 
     $('#form_dob_day').datepicker({
         autoPick: false,
         format: 'd'
-    }).on("change", function() {
-        checkAge();
     });
 
     function getFormData($form) {
@@ -189,10 +151,6 @@ $(document).ready(function () {
         doc.text(pointText.repeat(34), 60, 260);
         doc.text('Semnătura:', 114, 260);
         doc.text(pointText.repeat(40), 140, 260);
-
-        doc.setFontSize(9);
-        doc.text('Persoanele care au împlinit vârsta de 65 de ani completează doar pentru motivele prevăzute în campurile 1-6,', 20, 280), {renderingMode: 'fillThenStroke'};
-        doc.text('deplasarea fiind permisă zilnic doar în intervalul orar 11.00 - 13.00.', 20, 284);
 
         doc.setFont('Roboto', 'normal');
         doc.setFontSize(12);
