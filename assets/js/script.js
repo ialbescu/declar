@@ -88,7 +88,9 @@ $(document).ready(function () {
 
         let canvas = $('canvas').get(0);
 
-        return new SignaturePad(canvas);
+        return new SignaturePad(canvas, {
+            penColor: "rgb(0, 0, 255)"
+        });
     }
 
     function resizeSignaturePad(signaturePad) {
